@@ -1,0 +1,103 @@
+type TokenInfo @entity {
+  id: Bytes! # uint256
+  tokenId: BigInt! # tokenId
+  owner: UserInfo! # address
+  wstGRT: BigDecimal! # uint256
+  amountOfGRT: BigDecimal! # uint256
+  undelegateInfo: UndelegateInfo # uint256
+  status: BigInt! # order status 1.processing 2.pending 3.claimable 4.finished
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UserInfo @entity {
+  id: Bytes! # address
+  wstGRT: BigDecimal! #wstGRT
+  tokens: [TokenInfo!]! @derivedFrom(field: "owner")
+  wstGRTHistory: [UserWstGRTHistory!]! @derivedFrom(field: "user")
+}
+
+type UserWstGRTHistory @entity {
+  id: Bytes! # address-tx-log_index
+  user: UserInfo! # address
+  type: BigInt! # order type 1.in 2.out 3.deposit 4.withdraw
+  wstGRT: BigDecimal! # uint256
+  balance: BigDecimal! # uint256
+  wstGRTUsdPrice: BigDecimal! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RewardHistory @entity {
+  id: Bytes! # indexer-
+  wstGRT: BigDecimal! #wstGRT
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GstakeInfo @entity {
+  id: Bytes! # default 1
+  totalGRT: BigDecimal! # total grt of protocol
+  totalUser: BigInt! # total user
+  treasuryRewardGrt: BigDecimal! # total reward GRT
+  pendingGRT: BigDecimal! # pending grt of protocol
+  withdrawDebt: BigDecimal! # withdraw debt
+  exchangeRate: BigDecimal! # exchange rate
+  uniswapv3Price: BigDecimal! # uniswapv3Price
+  apr: BigDecimal! # *100
+  taxRate: BigDecimal! # *100
+  feeRate: BigDecimal! # *100
+  undelegateFreezeTime: BigInt! # *100
+  matchTime: BigInt! # *100
+  undelegateFreezeEpoch: BigInt! # *100
+  firstTime: BigInt! # *100
+  firstBlockNum: BigInt! # *100
+  withdrawLeft: BigDecimal! #
+  depositLeft: BigDecimal! #
+  withdrawMinLimit: BigDecimal! #
+  curDelegator: Bytes! #
+}
+
+type Delegator @entity {
+  id: Bytes! # address
+  index: BigInt!
+}
+
+type IndexerInfo @entity {
+  id: Bytes! # indexer
+  poolShares: BigInt!
+  poolGrtAmt: BigDecimal!
+  shares: BigInt!
+  grtAmt: BigDecimal!
+  cacheShareRate: BigDecimal!
+  shareRate: BigDecimal!
+  needUpdate: Boolean!
+}
+
+type UndelegateInfo @entity {
+  id: Bytes! # undelegationId
+  lockedGRT: BigDecimal!
+  leftGRT: BigDecimal!
+  status: BigInt! # 1:init 2:delegated 3:claimed
+  tokensLockedUntil: BigInt
+  tokensLockedUntilEpoch: BigInt
+  tokens: [TokenInfo!]! @derivedFrom(field: "undelegateInfo")
+  timestamp: BigInt!
+}
+
+type DelegationInfo @entity {
+  id: Bytes! # indexer-delegator
+  indexerInfo: IndexerInfo!
+  delegator: Delegator!
+  shares: BigInt!
+}
+
+type WstGrtHistory @entity {
+  id: Bytes! # indexer-delegator
+  timestamp: BigInt!
+  grtRate: BigDecimal!
+  usdRate: BigDecimal!
+}

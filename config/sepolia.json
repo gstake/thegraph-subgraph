@@ -1,0 +1,9 @@
+{
+    "network":"sepolia",
+    "startBlock":4825298,
+    "epochManagerAddr":"0x3C39036a76104D7c6D3eF13a21477C0fE23A3Aa2",
+    "Gstake-addr":"0x19A3669e2E34e37cc6B87b37e98454D8bb290486",
+    "WithdrawQueue-addr":"0xdEc9272737C0F8CAD670ce30B026049bd13BEd0D",
+    "TheGraphStaking-addr":"0x14e9B07Dc56A0B03ac8A58453B5cCCB289d6ec90",
+    "UniswapV3-addr":"0x7878D905cC5a7139168EeA8df62c91220812273C"
+}

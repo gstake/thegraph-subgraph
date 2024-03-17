@@ -1,0 +1,25 @@
+{
+  "name": "gstake-subgraph",
+  "license": "UNLICENSED",
+  "scripts": {
+    "prepare:sepolia": "mustache config/sepolia.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:arbitrum-sepolia": "mustache config/arbitrum-sepolia.json subgraph.template.yaml > subgraph.yaml",
+    "depoly:sepolia": "mustache config/sepolia.json subgraph.template.yaml > subgraph.yaml && graph codegen&& graph build && graph deploy --studio gstake",
+    "depoly:arbitrum-sepolia": "mustache config/arbitrum-sepolia.json subgraph.template.yaml > subgraph.yaml && graph codegen&& graph build && graph deploy --studio gstake-arbitrum-sepolia",
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ gstake-subgraph",
+    "create-local": "graph create --node http://localhost:8020/ gstake-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ gstake-subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gstake-subgraph",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.62.0",
+    "@graphprotocol/graph-ts": "0.31.0",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  }
+}

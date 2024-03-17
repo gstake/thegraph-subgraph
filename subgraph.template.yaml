@@ -1,0 +1,135 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Gstake
+    network: {{network}}
+    context:
+      epochManagerAddr:
+        type: Bytes
+        data: '{{epochManagerAddr}}'
+    source:
+      address: "{{Gstake-addr}}"
+      abi: Gstake
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - UserInfo
+        - RewardHistory
+        - GstakeInfo
+        - Delegator
+        - IndexerInfo
+        - UndelegateInfo
+        - DelegationInfo
+        - WstGrtHistory
+      abis:
+        - name: Gstake
+          file: ./abis/Gstake.json
+        - name: EpochManager
+          file: ./abis/EpochManager.json
+        - name: TheGraphStaking
+          file: ./abis/IGraphStaking.json
+      eventHandlers:
+        # - event: ClaimFromPending(uint256)
+        #   handler: handleClaimFromPending
+        - event: ClaimUndelegation(uint256)
+          handler: handleClaimUndelegation
+        - event: Delegate(uint256,uint256)
+          handler: handleDelegate
+        - event: Deposit(indexed address,indexed address,uint256,uint256)
+          handler: handleDeposit
+        - event: IndexerDelegate(address,address,uint256,uint256)
+          handler: handleIndexerDelegate
+        - event: IndexerUnDelegate(uint256,address,address,uint256,uint256)
+          handler: handleIndexerUnDelegate
+        - event: NewDelegator(uint256,address)
+          handler: handleNewDelegator
+        - event: RewardUpdated(address,address,uint256)
+          handler: handleRewardUpdated
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: RequestUndelegate(uint40,uint256,uint256,uint256,uint256[])
+          handler: handleRequestUndelegate
+        - event: WithdrawalClaimed(uint256,address,uint256,uint256)
+          handler: handleWithdrawalClaimed
+        - event: WithdrawalRequested(uint256,address,uint256,uint256,uint256)
+          handler: handleWithdrawalRequested
+        - event: WRStatusChanged(uint256,uint8)
+          handler: handleWRStatusChanged
+      file: ./src/gstake.ts
+  - kind: ethereum
+    name: WithdrawQueue
+    network: {{network}}
+    source:
+      address: "{{WithdrawQueue-addr}}"
+      abi: WithdrawQueue
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenInfo
+      abis:
+        - name: WithdrawQueue
+          file: ./abis/WithdrawQueue.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/withdraw-queue.ts
+  - kind: ethereum
+    name: TheGraphStaking
+    network: {{network}}
+    context:
+      gstakeAddr:
+        type: Bytes
+        data: '{{Gstake-addr}}'
+    source:
+      address: "{{TheGraphStaking-addr}}"
+      abi: TheGraphStaking
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - IndexerInfo
+      abis:
+        - name: TheGraphStaking
+          file: ./abis/IGraphStaking.json
+        - name: Gstake
+          file: ./abis/Gstake.json
+      eventHandlers:
+        - event: RebateCollected(address,indexed address,indexed bytes32,indexed address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebateCollected
+        - event: AllocationClosed(indexed address,indexed bytes32,uint256,uint256,indexed address,address,bytes32,bool)
+          handler: handleAllocationClosed
+        # - event: StakeDelegatedLocked(indexed address,indexed address,uint256,uint256,uint256)
+        #   handler: handleStakeDelegatedLocked
+      file: ./src/the-graph-staking.ts
+  - kind: ethereum
+    name: UniswapV3
+    network: {{network}}
+    source:
+      address: "{{UniswapV3-addr}}"
+      abi: UniswapV3
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - GstakeInfo
+      abis:
+        - name: UniswapV3
+          file: ./abis/UniswapV3.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap
+      file: ./src/uniswap.ts
+
+
