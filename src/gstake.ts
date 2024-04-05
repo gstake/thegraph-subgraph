@@ -48,7 +48,6 @@ export function handleTransfer(event: TransferEvent): void {
     updateGstakeInfo(event.address, event.block.timestamp, event.block.number);
     handleUserInfo(event, from, amount, true);
     handleUserInfo(event, to, amount, false);
-
     // update treasuryRewardGrt
     let contract = GstakeContract.bind(event.address);
     let _info = contract.try_getGstakeInfo();
@@ -64,6 +63,7 @@ export function handleTransfer(event: TransferEvent): void {
       }
     }
   }
+  createRewardHistory(event.address, event.block.timestamp);
 }
 
 function handleUserInfo(

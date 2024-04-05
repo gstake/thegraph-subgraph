@@ -4,8 +4,10 @@
   "scripts": {
     "prepare:sepolia": "mustache config/sepolia.json subgraph.template.yaml > subgraph.yaml",
     "prepare:arbitrum-sepolia": "mustache config/arbitrum-sepolia.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:arbitrum-one": "mustache config/arbitrum-one.json subgraph.template.yaml > subgraph.yaml",
     "depoly:sepolia": "mustache config/sepolia.json subgraph.template.yaml > subgraph.yaml && graph codegen&& graph build && graph deploy --studio gstake",
     "depoly:arbitrum-sepolia": "mustache config/arbitrum-sepolia.json subgraph.template.yaml > subgraph.yaml && graph codegen&& graph build && graph deploy --studio gstake-arbitrum-sepolia",
+    "depoly:arbitrum-one": "mustache config/arbitrum-one.json subgraph.template.yaml > subgraph.yaml && graph codegen&& graph build && graph deploy --studio thegraph-arbitrum",
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ gstake-subgraph",

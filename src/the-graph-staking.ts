@@ -26,7 +26,7 @@ export function handleAllocationClosed(event: AllocationClosedEvent): void {
 // export function handleStakeDelegatedLocked(
 //   event: StakeDelegatedLockedEvent
 // ): void {
-  
+
 // }
 
 function updateIndexer(contractAddr: Address, indexer: Bytes): void {
@@ -47,6 +47,5 @@ function updateIndexer(contractAddr: Address, indexer: Bytes): void {
     .toBigDecimal()
     .div(poolInfo.shares.toBigDecimal());
   indexerInfo.needUpdate = true;
-  indexerInfo.save()
+  indexerInfo.save();
 }
-

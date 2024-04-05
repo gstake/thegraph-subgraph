@@ -1,0 +1,9 @@
+{
+  "network": "arbitrum-one",
+  "startBlock": 197691805,
+  "epochManagerAddr": "0x5A843145c43d328B9bB7a4401d94918f131bB281",
+  "Gstake-addr": "0x3ccb5569a36d864933fbc6881715d1afda1849d9",
+  "WithdrawQueue-addr": "0xe3A8Ea187c3311d67E655f290c4d9FeF255735d6",
+  "TheGraphStaking-addr": "0x00669A4CF01450B64E8A2A20E9b1FCB71E61eF03",
+  "UniswapV3-addr": "0x7878D905cC5a7139168EeA8df62c91220812273C"
+}
